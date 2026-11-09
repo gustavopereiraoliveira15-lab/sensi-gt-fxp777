@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080808">
+<title>ɠɬɧ℘ყ⁷⁷⁷ | Sensi Gamer</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon-192.png">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+body{background:radial-gradient(ellipse at top,#333,#101010 45%,#050505);color:white;min-height:100vh;padding:15px}
+.container{max-width:600px;margin:auto}
+header{text-align:center;padding:25px 15px;border:1px solid #777;border-radius:18px;margin-bottom:18px;background:linear-gradient(#0009,#000b),url("fundo.png") center/cover;box-shadow:0 0 18px #7775}
+.logo{font-size:30px;font-weight:bold;color:#eee;text-shadow:0 0 12px #aaa}
+header p{color:#bbb;font-size:12px;margin-top:8px;letter-spacing:2px}
+.status{display:inline-block;margin-top:12px;padding:7px 15px;border:1px solid #888;border-radius:20px;font-size:11px;color:#ddd}
+nav{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:18px}
+nav button{background:#171717;color:#aaa;border:1px solid #555;padding:12px 5px;border-radius:10px;font-size:11px;font-weight:bold}
+nav button.active{background:#444;color:white;border-color:#ddd}
+.painel{display:none;background:#111;border:1px solid #555;border-radius:15px;padding:18px;margin-bottom:15px}
+.painel.active{display:block}
+h2{font-size:19px;margin-bottom:15px;color:#eee}
+h3{font-size:14px;margin:16px 0 10px;color:#ccc}
+label{display:block;color:#bbb;font-size:12px;margin:12px 0 7px}
+input,select{width:100%;padding:13px;border-radius:9px;border:1px solid #555;background:#080808;color:white;outline:none;font-size:14px}
+.choices{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}
+.choice{padding:13px 8px;border:1px solid #555;background:#191919;color:#ccc;border-radius:9px;font-weight:bold;font-size:12px}
+.choice.active{background:#555;color:white;border-color:#ddd}
+.main-btn{width:100%;padding:15px;margin-top:16px;background:linear-gradient(135deg,#777,#222);color:white;border:1px solid #aaa;border-radius:10px;font-weight:bold;font-size:13px}
+.resultado{margin-top:15px;padding:15px;background:#080808;border:1px solid #555;border-radius:10px;display:none}
+.resultado h3{margin-top:0}
+.resultado p{padding:9px 0;border-bottom:1px solid #292929;color:#ddd;font-size:14px}
+.resultado strong{color:white}
+.copy-btn{width:100%;margin-top:12px;padding:12px;background:#292929;color:white;border:1px solid #888;border-radius:9px;font-weight:bold}
+.info{color:#999;font-size:12px;line-height:1.6;margin-top:12px}
+footer{text-align:center;color:#777;font-size:11px;padding:20px 5px;line-height:1.8}
+
+
+/* SELEÇÃO BONITA DO TIPO DE DISPOSITIVO */
+.device-options{
+ display:grid;
+ grid-template-columns:repeat(2,minmax(0,1fr));
+ gap:7px;
+ margin:6px 0 13px;
+}
+.device-card:first-child{
+ grid-column:1 / -1;
+}
+.device-card{
+ min-width:0;
+ min-height:78px;
+ padding:9px 6px;
+ display:flex;
+ flex-direction:column;
+ align-items:center;
+ justify-content:center;
+ gap:4px;
+ background:linear-gradient(160deg,#242424,#101010);
+ color:#bbb;
+ border:1px solid #555;
+ border-radius:12px;
+ cursor:pointer;
+ transition:background .2s,border-color .2s,transform .2s,box-shadow .2s;
+}
+.device-card:active{transform:scale(.97)}
+.device-card.active{
+ background:linear-gradient(160deg,#505050,#202020);
+ color:#fff;
+ border:1px solid #ddd;
+ box-shadow:0 0 13px #aaa5,inset 0 0 12px #ffffff12;
+}
+.device-icon{font-size:20px;line-height:1}
+.device-name{font-size:10px;font-weight:bold;letter-spacing:.3px}
+.device-description{font-size:8px;color:#999;line-height:1.2;text-align:center}
+.device-card.active .device-description{color:#ddd}
+@media(max-width:360px){
+ .device-options{gap:6px}
+ .device-card{padding:8px 4px;min-height:72px}
+ .device-name{font-size:10px}
+ .device-description{font-size:8px}
+}
+
+
+/* GERADOR PREMIUM BLACK & SILVER */
+#gerador{
+ position:relative;
+ overflow:hidden;
+ border:1px solid #777;
+ background:
+  radial-gradient(ellipse at 50% 0%,#343434 0%,#171717 42%,#090909 100%);
+ box-shadow:0 0 22px #aaa2,inset 0 1px 0 #ffffff18;
+}
+#gerador:before{
+ content:"";
+ display:block;
+ height:3px;
+ margin:-18px -18px 16px;
+ background:linear-gradient(90deg,transparent,#777,#fff,#777,transparent);
+}
+.generator-heading{
+ display:flex;align-items:center;justify-content:space-between;gap:10px;
+ padding:12px 13px;margin-bottom:17px;border:1px solid #666;border-radius:11px;
+ background:linear-gradient(110deg,#292929,#090909);
+}
+.generator-heading strong{font-size:13px;letter-spacing:1px;color:#f2f2f2}
+.generator-heading span{font-size:9px;letter-spacing:1px;color:#bbb;border:1px solid #666;border-radius:20px;padding:6px 8px}
+.generator-caption{color:#999;font-size:11px;line-height:1.5;margin:-7px 0 16px}
+#gerador h3{font-size:11px;letter-spacing:1.4px;color:#aaa;margin:17px 0 10px}
+#gerador .choices{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+#gerador .choice{
+ min-height:68px;padding:10px 5px;border-radius:11px;
+ background:linear-gradient(160deg,#242424,#0b0b0b);
+ border:1px solid #555;color:#aaa;
+ box-shadow:inset 0 1px 0 #ffffff0b;
+}
+#gerador .choice:before{
+ content:"";display:block;width:18px;height:2px;margin:0 auto 8px;
+ background:#777;border-radius:4px;
+}
+#gerador .choice.active{
+ color:#fff;border-color:#eee;
+ background:linear-gradient(160deg,#666,#252525);
+ box-shadow:0 0 12px #aaa5,inset 0 0 12px #ffffff18;
+}
+#gerador .choice.active:before{background:#fff;box-shadow:0 0 7px #fff}
+#gerador .main-btn{
+ position:relative;overflow:hidden;margin-top:19px;padding:16px 12px;
+ border-radius:11px;border:1px solid #ddd;
+ background:linear-gradient(105deg,#777,#303030 48%,#111);
+ letter-spacing:1px;box-shadow:0 5px 16px #0009,inset 0 1px 0 #ffffff55;
+}
+#gerador .main-btn:active{transform:scale(.99)}
+#gerador .resultado{
+ background:linear-gradient(160deg,#191919,#070707);
+ border:1px solid #888;box-shadow:inset 0 0 18px #ffffff08;
+}
+#gerador .resultado h3{font-size:12px;color:#eee;letter-spacing:1px;margin:0 0 10px}
+#gerador .resultado p{
+ display:flex;justify-content:space-between;gap:10px;
+ padding:11px 3px;border-bottom:1px solid #333;font-size:13px;
+}
+#gerador .resultado strong{color:#aaa}
+#gerador .copy-btn{
+ background:linear-gradient(100deg,#444,#171717);
+ border-color:#999;letter-spacing:.7px;
+}
+@media(max-width:360px){
+ #gerador .choice{font-size:10px;min-height:62px}
+ .generator-heading strong{font-size:11px}
+}
+
+
+/* ÍCONES DOS NÍVEIS — SOMENTE NA ABA GERADOR */
+#gerador .level-choices{align-items:stretch}
+#gerador .level-choice{
+ display:flex;flex-direction:column;align-items:center;justify-content:center;
+ gap:7px;min-height:112px;padding:12px 5px;
+}
+#gerador .level-choice:before{display:none}
+#gerador .level-icon{
+ display:flex;align-items:center;justify-content:center;
+ width:34px;height:34px;border:1px solid #777;border-radius:50%;
+ color:#cfcfcf;font-size:25px;line-height:1;
+ background:radial-gradient(circle,#383838,#111);
+ text-shadow:0 0 8px #fff5;
+}
+#gerador .level-name{font-size:12px;font-weight:800;letter-spacing:.7px}
+#gerador .level-description{font-size:9px;font-weight:400;letter-spacing:0;color:#999;text-align:center}
+#gerador .level-choice.active .level-icon{
+ color:#fff;border-color:#eee;background:radial-gradient(circle,#777,#222);
+ box-shadow:0 0 12px #ddd8;text-shadow:0 0 9px #fff;
+}
+#gerador .level-choice.active .level-description{color:#eee}
+@media(max-width:360px){
+ #gerador .level-choice{min-height:100px;gap:6px}
+ #gerador .level-icon{width:30px;height:30px;font-size:22px}
+ #gerador .level-name{font-size:11px}
+ #gerador .level-description{font-size:8px}
+}
+
+/* TELA DE SENHA */
+.login-overlay{position:fixed;inset:0;background:radial-gradient(ellipse at top,#333,#101010 55%,#050505);z-index:5000;display:flex;align-items:center;justify-content:center;padding:20px}
+.login-box{width:100%;max-width:360px;background:#111;border:1px solid #777;border-radius:18px;padding:28px 22px;text-align:center;box-shadow:0 0 25px #aaa5}
+.login-logo{font-size:35px;color:#eee;font-weight:bold;margin-bottom:10px;text-shadow:0 0 12px #aaa}
+.login-box h2{margin:10px 0;font-size:20px}
+.login-box p{color:#aaa;font-size:12px;margin-bottom:18px}
+.login-box input{text-align:center;letter-spacing:5px}
+.login-btn{width:100%;padding:14px;margin-top:14px;background:linear-gradient(135deg,#777,#222);color:white;border:1px solid #aaa;border-radius:10px;font-weight:bold}
+.login-erro{display:none;color:#ff7777;font-size:12px;margin-top:12px}
+
+/* BOTÃO FLUTUANTE */
+.bolinha-evolution{
+ position:fixed;right:15px;top:50%;transform:translateY(-50%);
+ width:62px;height:62px;border-radius:50%;
+ background:linear-gradient(145deg,#888,#222);color:white;border:2px solid #ddd;
+ box-shadow:0 0 15px #aaa9;font-size:27px;font-weight:bold;z-index:1000;
+ display:flex;align-items:center;justify-content:center;cursor:pointer;
+ animation:pulsar 2s infinite;
+}
+@keyframes pulsar{0%,100%{box-shadow:0 0 10px #aaa7}50%{box-shadow:0 0 23px #ddd}}
+
+/* JANELA EVOLUTION */
+.evolution-overlay{position:fixed;inset:0;background:#000d;z-index:2000;display:none;align-items:center;justify-content:center;padding:12px}
+.evolution-overlay.aberto{display:flex}
+.evolution-window{width:100%;max-width:470px;max-height:90vh;background:#111;border:1px solid #888;border-radius:17px;padding:15px;display:flex;flex-direction:column;box-shadow:0 0 25px #aaa5}
+.evolution-topo{display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #444;padding-bottom:12px;margin-bottom:12px}
+.evolution-topo h2{margin:0;font-size:17px}
+.fechar-evolution{background:#292929;color:white;border:1px solid #777;border-radius:8px;padding:8px 12px;font-size:18px}
+.chat-box{background:#090909;border:1px solid #444;border-radius:12px;padding:12px;min-height:180px;max-height:40vh;overflow-y:auto;display:flex;flex-direction:column;gap:12px}
+.mensagem{max-width:88%;padding:12px;border-radius:12px;font-size:13px;line-height:1.5;overflow-wrap:anywhere}
+.bot{background:#242424;border:1px solid #555;align-self:flex-start;color:#eee}
+.usuario{background:#555;border:1px solid #888;align-self:flex-end;color:white}
+.chat-opcoes{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.chat-opcoes button{background:#222;color:#eee;border:1px solid #777;padding:11px 13px;border-radius:9px;font-size:12px;font-weight:bold}
+.chat-entrada{display:flex;gap:8px;margin-top:12px}
+.chat-entrada input{flex:1;min-width:0}
+.chat-entrada button{background:#555;color:white;border:1px solid #999;padding:0 15px;border-radius:9px;font-weight:bold}
+.chat-resultado{display:none;margin-top:12px;padding:12px;background:#080808;border:1px solid #777;border-radius:10px;max-height:180px;overflow-y:auto}
+.chat-resultado p{padding:8px 0;border-bottom:1px solid #292929;font-size:13px}
+.chat-reiniciar{background:#222;color:white;border:1px solid #777;padding:11px;border-radius:9px;width:100%;margin-top:10px}
+</style>
+</head>
+
+<body>
+
+<!-- TELA DE SENHA -->
+<div class="login-overlay" id="loginScreen">
+ <div class="login-box">
+  <div class="login-logo">ɠɬɧ℘ყ⁷⁷⁷</div>
+  <h2>ACESSO RESTRITO</h2>
+  <p>Digite a senha para entrar no SENSI GAMER</p>
+  <input type="password" id="senhaLogin" placeholder="Digite sua senha" maxlength="20" autocomplete="off">
+  <button type="button" class="login-btn" id="entrarLogin">ENTRAR</button>
+  <div class="login-erro" id="loginErro">Senha incorreta! Tente novamente.</div>
+ </div>
+</div>
+
+<div class="container">
+<header>
+ <div class="logo">ɠɬɧ℘ყ⁷⁷⁷</div>
+ <p>FREE FIRE • SENSI GAMER</p>
+ <div class="status">● SISTEMA ONLINE</div>
+</header>
+
+<nav>
+ <button class="active" onclick="abrirAba('armas',this)">⚔ ARMAS</button>
+ <button onclick="abrirAba('celular',this)">▣ CELULAR</button>
+ <button onclick="abrirAba('gerador',this)">◎ GERADOR</button>
+ <button onclick="abrirAba('video',this)">▶ VÍDEO</button>
+ <button onclick="abrirAba('sobre',this)">⚙ SOBRE</button>
+</nav>
+
+<section id="armas" class="painel active">
+<h2>⚔ ESCOLHA SUA ARMA</h2>
+<div class="choices">
+ <button class="choice active" onclick="selecionarArma('normal',this)">TODAS</button>
+ <button class="choice" onclick="selecionarArma('ump',this)">UMP</button>
+ <button class="choice" onclick="selecionarArma('xm8',this)">XM8</button>
+ <button class="choice" onclick="selecionarArma('desert',this)">DESERT</button>
+ <button class="choice" onclick="selecionarArma('m1014',this)">M1014</button>
+</div>
+<p class="info">Escolha a arma para gerar sua configuração.</p>
+</section>
+
+<section id="celular" class="painel">
+<h2>▣ CONFIGURAÇÃO DO DISPOSITIVO</h2>
+<label>Tipo de dispositivo</label>
+<div class="device-options" role="group" aria-label="Escolha o tipo de dispositivo">
+ <button type="button" class="device-card active" data-device="celular" aria-pressed="true">
+  <span class="device-icon">📱</span>
+  <span class="device-name">CELULAR</span>
+  <span class="device-description">Jogar direto no aparelho</span>
+ </button>
+ <button type="button" class="device-card" data-device="mobilador" aria-pressed="false">
+  <span class="device-icon">⌨️ 🖱️</span>
+  <span class="device-name">MOBILADOR</span>
+  <span class="device-description">Teclado e mouse no celular</span>
+ </button>
+ <button type="button" class="device-card" data-device="emulador" aria-pressed="false">
+  <span class="device-icon">🖥️</span>
+  <span class="device-name">EMULADOR</span>
+  <span class="device-description">Jogar pelo computador</span>
+ </button>
+</div>
+<select id="tipoDispositivo" hidden aria-hidden="true" tabindex="-1">
+ <option value="celular" selected>CELULAR</option>
+ <option value="mobilador">MOBILADOR</option>
+ <option value="emulador">EMULADOR</option>
+</select>
+<label id="labelMarca">Marca do celular</label>
+<select id="marca" onchange="atualizarModelos()">
+ <option value="">Selecione a marca</option><option value="Apple">Apple iPhone</option><option value="Android">Android genérico</option><option value="Samsung">Samsung</option><option value="Xiaomi">Xiaomi</option><option value="Realme">Realme</option><option value="POCO">POCO</option>
+</select>
+<label id="labelModelo">Modelo do aparelho</label>
+<select id="modelo"><option value="">Selecione primeiro a marca</option></select>
+<label id="labelOutro">Outro modelo (opcional)</label>
+<input id="outroModelo" placeholder="Digite seu modelo">
+</section>
+
+<section id="gerador" class="painel">
+<div class="generator-heading">
+ <strong>◎ CENTRAL DE SENSIBILIDADE</strong>
+ <span>BLACK &amp; SILVER</span>
+</div>
+<h2>GERADOR DE SENSI</h2>
+<p class="generator-caption">Configure o nível desejado e gere uma sugestão de sensibilidade para sua partida.</p>
+<h3>SELECIONE O NÍVEL</h3>
+<div class="choices level-choices">
+ <button class="choice level-choice" onclick="selecionarNivel('baixa',this)">
+  <span class="level-icon" aria-hidden="true">◎</span>
+  <span class="level-name">BAIXA</span>
+  <span class="level-description">Precisão suave</span>
+ </button>
+ <button class="choice level-choice active" onclick="selecionarNivel('media',this)">
+  <span class="level-icon" aria-hidden="true">◉</span>
+  <span class="level-name">MÉDIA</span>
+  <span class="level-description">Equilibrada</span>
+ </button>
+ <button class="choice level-choice" onclick="selecionarNivel('alta',this)">
+  <span class="level-icon" aria-hidden="true">ϟ</span>
+  <span class="level-name">ALTA</span>
+  <span class="level-description">Mais agilidade</span>
+ </button>
+</div>
+<button class="main-btn" onclick="gerarSensi()">⚡ &nbsp; GERAR MINHA SENSI</button>
+<div id="resultadoSensi" class="resultado">
+ <h3>✓ CONFIGURAÇÃO GERADA</h3>
+ <div id="valoresSensi"></div>
+ <button class="copy-btn" onclick="copiarSensi()">▣ &nbsp; COPIAR CONFIGURAÇÃO</button>
+</div>
+</section>
+
+<section id="video" class="painel">
+<h2>▶ GERADOR POR VÍDEO</h2>
+<label>Link do TikTok ou YouTube</label>
+<input id="linkVideo" placeholder="Cole o link aqui">
+<p class="info">Este recurso valida o link e gera uma sugestão. Não assiste nem analisa o conteúdo do vídeo.</p>
+<button class="main-btn" onclick="analisarVideo()">ANALISAR E GERAR SENSI</button>
+<div id="resultadoVideo" class="resultado"><h3>✓ SUGESTÃO GERADA</h3><div id="valoresVideo"></div><button class="copy-btn" onclick="copiarVideo()">COPIAR CONFIGURAÇÃO</button></div>
+</section>
+
+<section id="sobre" class="painel">
+<h2>⚙ SOBRE O PROJETO</h2>
+<div style="text-align:center;padding:15px">
+ <div style="font-size:45px">♛</div><h3>CRIADOR DO SENSI GAMER</h3>
+ <p style="color:#bbb;margin-top:10px">@gt.fxp⁷⁷⁷</p><p class="info">Projeto BLACK & SILVER</p><p class="info">Versão 4.1</p>
+</div>
+</section>
+
+<footer>© 2026 ɠɬɧ℘ყ⁷⁷⁷ • SENSI GAMER<br>BLACK & SILVER EDITION</footer>
+</div>
+
+<button type="button" id="botaoEvolution" class="bolinha-evolution" aria-label="Abrir Sensi Evolution">✦</button>
+
+<div class="evolution-overlay" id="evolutionOverlay">
+ <div class="evolution-window">
+  <div class="evolution-topo"><h2>✦ SENSI EVOLUTION</h2><button type="button" class="fechar-evolution" id="fecharEvolution">✕</button></div>
+  <div id="chatMensagens" class="chat-box"></div>
+  <div id="chatOpcoes" class="chat-opcoes"></div>
+  <div id="chatEntrada" class="chat-entrada" style="display:none"><input id="respostaTexto" placeholder="Digite seu modelo..." maxlength="50"><button type="button" id="enviarTexto">ENVIAR</button></div>
+  <div id="resultadoEvolution" class="chat-resultado"><h3>✦ SUA SENSI EVOLUTION</h3><div id="valoresEvolution"></div><button type="button" class="copy-btn" id="copiarEvolution">COPIAR EVOLUTION</button></div>
+  <button type="button" class="chat-reiniciar" id="reiniciarEvolution">↻ RECOMEÇAR CONVERSA</button>
+ </div>
+</div>
+
+<script>
+/* SENHA DE ACESSO */
+function verificarSenha(){
+ const senha=document.getElementById("senhaLogin").value;
+ if(senha==="66159"){
+  document.getElementById("loginScreen").style.display="none";
+  document.getElementById("loginErro").style.display="none";
+ }else{
+  document.getElementById("loginErro").style.display="block";
+  document.getElementById("senhaLogin").value="";
+  document.getElementById("senhaLogin").focus();
+ }
+}
+document.getElementById("entrarLogin").addEventListener("click",verificarSenha);
+document.getElementById("senhaLogin").addEventListener("keydown",function(event){if(event.key==="Enter")verificarSenha();});
+
+let armaSelecionada="normal";
+let nivelSelecionado="media";
+let evolutionIniciado=false;
+let evolutionEtapa=0;
+let respostasEvolution={};
+
+const modelos={
+ Apple:["iPhone 11","iPhone 12","iPhone 13","iPhone 14","iPhone 15","iPhone 16","iPhone 17"],
+ Android:["Android genérico","Outro Android"],
+ Samsung:["Galaxy A12","Galaxy A13","Galaxy A14","Galaxy A15","Galaxy A22","Galaxy A23","Galaxy A32","Galaxy A33","Galaxy A34","Galaxy A35","Galaxy A52","Galaxy A53","Galaxy A54","Galaxy A55","Galaxy S21","Galaxy S22","Galaxy S23","Galaxy S24","Galaxy S25"],
+ Xiaomi:["Redmi 9","Redmi 10","Redmi 12","Redmi 13","Redmi 14C","Redmi Note 10","Redmi Note 11","Redmi Note 12","Redmi Note 13","Redmi Note 14","Xiaomi 12","Xiaomi 13","Xiaomi 14","Xiaomi 15"],
+ Realme:["Realme C25","Realme C35","Realme C53","Realme C55","Realme C67","Realme C75","Realme 8","Realme 9","Realme 10","Realme 11","Realme 12","Realme 13","Realme GT Neo"],
+ POCO:["POCO X3","POCO X3 Pro","POCO X4 Pro","POCO X5","POCO X5 Pro","POCO X6","POCO X6 Pro","POCO X7","POCO X7 Pro","POCO F3","POCO F4","POCO F5","POCO F6","POCO M4","POCO M5","POCO M6"]
+};
+
+const bases={
+ normal:[185,180,175,165,95,150],ump:[190,188,180,170,100,155],
+ xm8:[180,175,185,175,105,145],desert:[195,190,180,160,90,150],
+ m1014:[190,185,170,160,90,155]
+};
+const nomes=["Geral","Ponto Vermelho","Mira 2X","Mira 4X","Mira AWM","Olhadinha"];
+
+function abrirAba(id,botao){
+ document.querySelectorAll(".painel").forEach(p=>p.classList.remove("active"));
+ document.querySelectorAll("nav button").forEach(b=>b.classList.remove("active"));
+ document.getElementById(id).classList.add("active");botao.classList.add("active");
+}
+function selecionarA
